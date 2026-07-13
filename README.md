@@ -6,155 +6,161 @@
 
 ## Overview
 
-5G Cloud Labs is organized around two complementary repository types:
+5G Cloud Labs brings together Infrastructure as Code, Kubernetes, GitOps, and open-source 5G software to create reproducible platform environments for experimentation and integration.
 
-- **Platform Environments** provide reproducible cloud-based 5G network environments where use cases can be integrated and evaluated.
-- **Use Case Repositories** contain independent automation and AI capabilities that can be developed, tested, and evolved separately before integration.
+Rather than focusing on a single solution, the project provides a common environment where automation and AI use cases can be developed independently, integrated into a platform environment, and evaluated against realistic 5G network scenarios.
 
-This separation allows platform environments and use cases to evolve independently while providing a consistent model for end-to-end evaluation.
+The long-term goal is to make it easier to build, test, compare, and evolve new approaches to operating cloud-native mobile networks.
 
 ---
 
-## Project Model
+# Project Architecture
 
 ```text
-                          5G Cloud Labs
-                                 │
-          ┌──────────────────────┴──────────────────────┐
-          │                                             │
-          ▼                                             ▼
-  Platform Environments                    Use Case Repositories
-          │                                             │
-          └──────────────────────┬──────────────────────┘
-                                 │
-                                 ▼
-                     End-to-End Evaluation
+                              5G Cloud Labs
+                                     │
+        ┌────────────────────────────┴────────────────────────────┐
+        │                                                         │
+        ▼                                                         ▼
+ Platform Environments                                  Use Case Repositories
+        │                                                         │
+        │                                                         │
+ ┌──────┴─────────┐                                  ┌────────────┴────────────┐
+ │                │                                  │                         │
+ ▼                ▼                                  ▼                         ▼
+5g-platform-aws 5g-platform-gcp            network-deployment-agent      Future Use Cases
+      │                │                              │                         │
+      └────────────────┴──────────────┬───────────────┘
+                                      │
+                                      ▼
+                     Platform Integration & Validation
+                                      │
+                                      ▼
+                 Reproducible 5G Network Environment
+                                      │
+                                      ▼
+          Automation • AI • Experimentation • End-to-End Evaluation
 ```
 
-Platform Environments provide reproducible integration laboratories.
+The project separates reusable platform environments from individual automation and AI use cases.
 
-Use Case Repositories focus on solving individual automation or AI problems independently before they are integrated into one or more Platform Environments.
+Platform environments provide the cloud infrastructure, Kubernetes platform, networking, observability, and deployable 5G network environment required for integration and evaluation.
 
----
+Use cases are developed independently and integrated into a platform environment when they are ready for end-to-end evaluation.
 
-## Repository Types
-
-### Platform Environments
-
-Platform Environments provide the infrastructure, Kubernetes platform, networking, observability, and deployable network components required for end-to-end evaluation.
-
-Current and planned Platform Environments include:
-
-| Repository | Cloud | Description |
-|------------|-------|-------------|
-| **5g-platform-aws** | AWS | AWS Platform Environment |
-| **5g-platform-gcp** *(planned)* | GCP | GCP Platform Environment |
-
-Each Platform Environment follows the same contributor model while providing cloud-specific implementation details.
+This model allows contributors to work independently while keeping platform environments stable and reusable.
 
 ---
 
-### Use Case Repositories
+# Repository Roles
 
-Use Case Repositories implement individual automation or AI capabilities independently of any specific Platform Environment.
+## Platform Environments
 
-Current repository:
+Platform repositories provide reproducible cloud environments used for integration and evaluation.
 
 | Repository | Description |
 |------------|-------------|
-| **network-deployment-agent** | AI-assisted network deployment and provisioning through a natural language interface |
-
-Additional repositories can be created whenever a new automation or AI capability is developed.
+| **5g-platform-aws** | AWS platform environment built on OpenTofu, Amazon EKS, GitOps, and a reproducible 5G network environment. |
+| **5g-platform-gcp** *(planned)* | Future Google Cloud platform environment following the same architecture. |
 
 ---
 
-## Contributor Workflow
+## Use Case Repositories
 
-Most contributions do **not** require a deployed Platform Environment.
+Use case repositories contain automation and AI capabilities that are developed independently before being integrated into a platform environment.
 
-Development typically follows this workflow:
+Current examples include:
+
+| Repository | Description |
+|------------|-------------|
+| **network-deployment-agent** | AI-assisted operational interface for deploying and provisioning network components through natural language. |
+
+Future use cases may include additional automation, observability, orchestration, optimization, testing, or AI capabilities.
+
+---
+
+# Development Model
+
+Most contributors do **not** need to deploy an entire platform environment.
+
+Typical development follows this workflow:
 
 ```text
-Develop Locally
-       │
-       ▼
+Idea
+   │
+   ▼
+Local Development
+   │
+   ▼
 Use Case Repository
-       │
-       ▼
-Platform Environment
-       │
-       ▼
+   │
+   ▼
+Platform Integration
+   │
+   ▼
 End-to-End Evaluation
 ```
 
-Developers can build and validate new capabilities locally before integrating them into a Platform Environment for evaluation against a reproducible 5G network environment.
+Most development can therefore be performed locally before integrating changes into a deployed platform environment for validation.
 
 ---
 
-## Example Use Cases
+# Current Platform
 
-5G Cloud Labs is intentionally open-ended.
+Today, AWS serves as the primary integration laboratory.
 
-Examples of use cases that fit naturally within the project include:
+The AWS platform provides:
 
-- AI-assisted network deployment
-- Intent-based network operations
-- Network provisioning automation
-- Day-2 operational automation
-- AI-assisted troubleshooting
-- Configuration management
-- Network validation
-- Observability and analytics
-- Operational copilots
-- Policy-driven orchestration
+- Cloud infrastructure provisioning with OpenTofu
+- Amazon EKS
+- GitOps platform bootstrap
+- Multi-network Kubernetes support
+- Observability
+- Deployable Free5GC network environment
+- AI-assisted deployment and provisioning through the Network Deployment Agent
 
-The Network Deployment Agent is the first integrated use case, demonstrating how independent capabilities can be integrated into a Platform Environment for end-to-end evaluation.
+Future platform environments will follow the same integration model across additional cloud providers.
 
 ---
 
-## Project Vision
+# Contributing
 
-5G Cloud Labs is designed as a growing collection of Platform Environments and Use Case Repositories.
+Contributions are welcome across both platform environments and use case repositories.
 
-Platform Environments provide consistent integration laboratories where ideas can be evaluated against comparable 5G network scenarios regardless of the underlying cloud provider.
+Typical contributions include:
 
-Use Case Repositories remain independent projects, allowing them to evolve at their own pace while being integrated into one or more Platform Environments.
+- Platform infrastructure
+- Kubernetes platform services
+- Network automation
+- AI use cases
+- Deployment workflows
+- Observability
+- Documentation
 
-As the project evolves, additional cloud providers, operational tooling, automation frameworks, and AI capabilities may be added while preserving the same development model.
+If you're unsure where a contribution belongs, open an issue in the appropriate repository and we'll be happy to discuss it.
 
 ---
 
-## Getting Started
+# Getting Started
 
-| Goal | Start Here |
+| Goal | Repository |
 |------|------------|
-| Learn about the project | This page |
-| Deploy a Platform Environment | **5g-platform-aws** |
-| Develop a new capability | Create or contribute to a Use Case Repository |
-| Integrate a capability | Open a pull request against the appropriate Platform Environment |
+| Learn how the AWS laboratory works | **5g-platform-aws** |
+| Develop an AI or automation capability | Relevant use case repository |
+| Understand the overall project | This organization profile |
 
 ---
 
-## Contributing
+# Vision
 
-Contributions are welcome across both Platform Environments and Use Case Repositories.
+5G Cloud Labs is designed as a long-term experimentation platform rather than a fixed solution.
 
-Choose the repository that best matches the change you want to make.
-
-Most development can begin locally without deploying a Platform Environment.
-
-Platform Environments are intended for integration and end-to-end evaluation once a capability is ready.
-
-If you're unsure where a contribution belongs, feel free to open an issue for discussion.
+As additional platform environments become available, the same development model can be applied across multiple cloud providers, allowing automation and AI use cases to be evaluated consistently using comparable cloud-native 5G network environments.
 
 ---
 
 ## Links
 
-🌐 **Website**
+🌐 Website: **https://5gcloudlabs.ai**
 
-https://5gcloudlabs.ai
-
-📧 **Contact**
-
-info@5gcloudlabs.ai
+📧 Contact: **info@5gcloudlabs.ai**
