@@ -17,29 +17,17 @@ The long-term goal is to make it easier to build, test, compare, and evolve new 
 # Project Architecture
 
 ```text
-                              5G Cloud Labs
-                                     │
-        ┌────────────────────────────┴────────────────────────────┐
-        │                                                         │
-        ▼                                                         ▼
- Platform Environments                                  Use Case Repositories
-        │                                                         │
-        │                                                         │
- ┌──────┴─────────┐                                  ┌────────────┴────────────┐
- │                │                                  │                         │
- ▼                ▼                                  ▼                         ▼
-5g-platform-aws 5g-platform-gcp            network-deployment-agent      Future Use Cases
-      │                │                              │                         │
-      └────────────────┴──────────────┬───────────────┘
-                                      │
-                                      ▼
-                     Platform Integration & Validation
-                                      │
-                                      ▼
-                 Reproducible 5G Network Environment
-                                      │
-                                      ▼
-          Automation • AI • Experimentation • End-to-End Evaluation
+                          5G Cloud Labs
+                                 │
+          ┌──────────────────────┴──────────────────────┐
+          │                                             │
+          ▼                                             ▼
+  Platform Environments                    Use Case Repositories
+          │                                             │
+          └──────────────────────┬──────────────────────┘
+                                 │
+                                 ▼
+                     End-to-End Evaluation
 ```
 
 The project separates reusable platform environments from individual automation and AI use cases.
