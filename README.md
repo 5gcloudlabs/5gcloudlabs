@@ -74,7 +74,7 @@ Most contributors do **not** need to deploy an entire platform environment.
 Typical development follows this workflow:
 
 ```text
-Idea
+Idea or Use Case
    │
    ▼
 Local Development
